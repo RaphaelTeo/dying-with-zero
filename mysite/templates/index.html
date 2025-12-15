@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dying with Zero Calculator</title>
+</head>
+<style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; text-align: center; }
+        input[type="number"] { padding: 8px; margin: 10px; width: 200px; }
+        input[type="submit"] { padding: 8px 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        input[type="submit"]:hover { background-color: #45a049; }
+        .result { margin-top: 20px; font-size: 18px; }
+        .tooltip {
+          position: relative;
+          display: inline-block;
+          border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+        }
+
+        /* Tooltip text */
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: black;
+          color: #fff;
+          text-align: center;
+          padding: 5px 0;
+          border-radius: 6px;
+
+          /* Position the tooltip text */
+          position: absolute;
+          z-index: 1;
+        }
+
+        /* Show the tooltip text when you mouse over the tooltip container */
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+        }
+    </style>
+<body>
+  <h1>How early can you retire?* </h1>
+  <form method="POST" action="/">
+        <input type="number" name="age" placeholder="current age" required>
+        <input type="number" name="retage" placeholder="projected retirement age" required>
+        <input type="number" name="income" placeholder="income (in thousands)" required>
+        <input type="number" name="expenses" placeholder="expenses (in thousands)" required>
+        <input type="number" step="any" name="returns" placeholder="real return in %" required>
+        <input type="number" name="init" placeholder="initial capital (in thousands)" required>
+        <br><br>
+        <input type="submit" value="Calculate">
+        <div class="tooltip">  (*notes)
+            <span class="tooltiptext">Housing costs should be spread out over the annual expenses. All figures are in real terms (present value). Not financial advice, do your own due diligence.</span>
+            </div>
+        <br><br>
+         <div>
+             Credit: Raphael's
+             <a href="https://www.linkedin.com/in/raphaelteo/">LinkedIn</a>
+             and
+            <a href="https://substack.com/@raphaelteo">Substack</a>
+         </div>
+  </form>
+
+  {% if error %}
+        <div class="error">{{ error }}</div>
+  {% endif %}
+  {% if image_data %}
+        <div class="summary"> {{ summary }} </div>
+        <h2></h2>
+      <img src="data:image/png;base64,{{ image_data }}" alt="Chart of retirement ages" class="center">
+  {% endif %}
+</body>
+</html>
