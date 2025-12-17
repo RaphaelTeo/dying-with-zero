@@ -63,18 +63,7 @@ def index():
             else:
                 error = 'Input error, please follow the extraordinary cash flow example.'
                 return render_template("index.html", error=error, image_data=image_data, summary=summary, table=table, tableheader=tableheader) #exit workflow
-            '''
-            try: # nested try for optional special values
-                specialages = [int(item) for item in str(request.form['specialages']).split(",")]
-                specialadds = [float(item)/1000 for item in str(request.form['specialadds']).split(",")]
-                special_dict = dict(zip(specialages,specialadds))
-            except:
-                if (not request.form['specialages']) and (not request.form['specialadds']) or (request.form['specialages']) and (request.form['specialadds']): # both are empty or both are filled
-                    special_dict = {} # empty dict, continue
-                else:
-                    error = 'Input error, please follow the example.'
-                    return render_template("index.html", error=error, image_data=image_data, summary=summary, table=table, tableheader=tableheader) #exit workflow
-'''
+
             step = round((retage-age)/number_of_charts) # returns int by default if not specified
             retirement_age_list = list(range(age+1,retage+1,step))
             if retage not in retirement_age_list: # sometimes the step value skips the actual retage
@@ -118,7 +107,6 @@ def index():
             tableheader = f'Data table for retirement at age {retage} ($ \'000)'
 
         except Exception as e:
-            #print (e)
             error = f"error: {e}"
 
     return render_template("index.html", error=error, image_data=image_data, summary=summary, table=table, tableheader=tableheader) 
