@@ -8,6 +8,7 @@
 <style>
         body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; text-align: center; }
         input[type="number"] { padding: 8px; margin: 10px; width: 200px; }
+        input[type="text"] { padding: 8px; margin: 10px; width: 200px; }
         input[type="submit"] { padding: 8px 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
         input[type="submit"]:hover { background-color: #45a049; }
         .result { margin-top: 20px; font-size: 18px; }
@@ -38,26 +39,50 @@
         }
     </style>
 <body>
+  <div style="text-align: center;">
   <h1>How early can you retire?* </h1>
   <form method="POST" action="/">
-        <input type="number" name="age" placeholder="current age" required>
-        <input type="number" name="retage" placeholder="projected retirement age" required>
-        <input type="number" name="income" placeholder="income (in thousands)" required>
-        <input type="number" name="expenses" placeholder="expenses (in thousands)" required>
-        <input type="number" step="any" name="returns" placeholder="real return in %" required>
-        <input type="number" name="init" placeholder="initial capital (in thousands)" required>
-        <br><br>
-        <input type="submit" value="Calculate">
-        <div class="tooltip">  (*notes)
-            <span class="tooltiptext">Housing costs should be spread out over the annual expenses. All figures are in real terms (present value). Not financial advice, do your own due diligence.</span>
-            </div>
-        <br><br>
-         <div>
-             Credit: Raphael's
-             <a href="https://www.linkedin.com/in/raphaelteo/">LinkedIn</a>
-             and
-            <a href="https://substack.com/@raphaelteo">Substack</a>
-         </div>
+    <input type="number" name="age" placeholder="Current age" required>
+    <input type="number" name="retage" placeholder="Projected retirement age" required>
+    <input type="number" name="income" placeholder="Annual income" required>
+    <input type="number" name="expenses" placeholder="Annual expenses" required>
+    <input type="number" step="any" name="returns" placeholder="Real return in %" required>
+    <input type="number" name="init" placeholder="Initial capital" required>
+    <br>
+    List the age on the left and extraordinary cash flow (income/expenses) on the right.
+    e.g. If you expect a $200,000 expense at age 30 and a $300,000 inflow at age 55:
+    <table style="width: 100%; border: none; border-collapse: collapse;">
+      <tr>
+        <!-- First half (left side) -->
+        <td style="width: 50%; padding: 10px; text-align: center;">
+            <!-- Content for the left half goes here -->
+            <h3>Age</h3>
+            <p>e.g.: 30,55</p>
+            <p><input type="text" name="specialages" placeholder="Age"></p>
+        </td>
+
+        <!-- Second half (right side) -->
+        <td style="width: 50%; padding: 10px; text-align: center;">
+            <!-- Content for the right half goes here -->
+            <h3>Cash flow</h3>
+            <p>e.g.: -200000,300000</p>
+            <p><input type="text" name="specialadds" placeholder="Cash Flow"></p>
+        </td>
+      </tr>
+    </table>
+
+    <input type="submit" value="Calculate">
+    <div class="tooltip">  (*notes)
+        <span class="tooltiptext">All figures are in real terms (present value). Not financial advice, do your own due diligence.</span>
+        </div>
+    <br><br>
+      <div>
+          Credit: Raphael's
+          <a href="https://www.linkedin.com/in/raphaelteo/">LinkedIn</a>
+          and
+        <a href="https://substack.com/@raphaelteo">Substack</a>
+      </div>
+      <br><br>
   </form>
 
   {% if error %}
@@ -67,6 +92,10 @@
         <div class="summary"> {{ summary }} </div>
         <h2></h2>
       <img src="data:image/png;base64,{{ image_data }}" alt="Chart of retirement ages" class="center">
+      <br><br>
+      <div class="tableheader" style="text-align: center;"> {{ tableheader }} </div>
+      {{ table | safe }}
   {% endif %}
+  </div>
 </body>
 </html>
