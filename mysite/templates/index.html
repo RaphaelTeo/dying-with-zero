@@ -6,67 +6,139 @@
   <title>Dying with Zero Calculator</title>
 </head>
 <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; text-align: center; }
-        input[type="number"] { padding: 8px; margin: 10px; width: 200px; }
-        input[type="text"] { padding: 8px; margin: 10px; width: 200px; }
-        input[type="submit"] { padding: 8px 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-        input[type="submit"]:hover { background-color: #45a049; }
-        .result { margin-top: 20px; font-size: 18px; }
-        .tooltip {
-          position: relative;
-          display: inline-block;
-          border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-        }
+  body { font-family: Arial, sans-serif; margin: 20px auto; text-align: center; }
+  input[type="number"] { padding: 8px; margin: 10px; width: 150px; }
+  input[type="text"] { padding: 8px; margin: 10px; width: 150px; }
+  input[type="submit"] { padding: 8px 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+  input[type="submit"]:hover { background-color: #45a049; }
+  .result { margin-top: 20px; font-size: 18px; }
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  }
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+  }
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+  form {
+    max-width: 520px;              /* controls form width */
+    margin: 0 auto;            /* keeps form centered */
+    padding: 0 10px;
+  }
+  .form-row {
+    display: flex;
+    justify-content: space-between; /* separates label & input */
+    align-items: center;
+    margin: 12px 0;
+    gap: 10px;
+  }
 
-        /* Tooltip text */
-        .tooltip .tooltiptext {
-          visibility: hidden;
-          width: 120px;
-          background-color: black;
-          color: #fff;
-          text-align: center;
-          padding: 5px 0;
-          border-radius: 6px;
+  .form-row label {
+    text-align: left;
+    flex: 1;              /* label takes left side */
+  }
 
-          /* Position the tooltip text */
-          position: absolute;
-          z-index: 1;
-        }
+  /* 🔹 MOBILE OPTIMIZATION */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 22px;
+    }
 
-        /* Show the tooltip text when you mouse over the tooltip container */
-        .tooltip:hover .tooltiptext {
-          visibility: visible;
-        }
-    </style>
+    .form-row {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: left;
+    }
+
+    .form-row label {
+      margin-bottom: 4px;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      margin-top: 15px;
+    }
+     
+    /* ONLY stack the special input table */
+    .special-table {
+      width: 100% !important;
+    }
+
+    .special-table tr {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .special-table td {
+      width: 100% !important;
+      padding: 5px 0;
+    }
+  }
+</style>
 <body>
   <div style="text-align: center;">
   <h1>How early can you retire?* </h1>
   <form method="POST" action="/">
-    <input type="number" name="age" placeholder="Current age" required>
-    <input type="number" name="retage" placeholder="Projected retirement age" required>
-    <input type="number" name="income" placeholder="Annual income" required>
-    <input type="number" name="expenses" placeholder="Annual expenses" required>
-    <input type="number" step="any" name="returns" placeholder="Real return in %" required>
-    <input type="number" name="init" placeholder="Initial capital" required>
-    <br>
-    List the age on the left and extraordinary cash flow (income/expenses) on the right.
+  <div class="form-row">
+    <label for="age">Current age:</label>
+    <input type="number" name="age" placeholder="e.g.: 30" required><br>
+  </div>
+  <div class="form-row">
+    <label for="retage">Age to stop working:</label>
+    <input type="number" name="retage" placeholder="e.g.: 50" required><br>
+  </div>
+  <div class="form-row">
+    <label for="income">Annual income:</label>
+    <input type="number" name="income" placeholder="e.g.: 100000" required><br>
+  </div>
+  <div class="form-row">
+    <label for="expenses">Annual expenses:</label>
+    <input type="number" name="expenses" placeholder="e.g.: 48000" required><br>
+  </div>
+  <div class="form-row">
+    <label for="returns">Real returns (%):</label>
+    <input type="number" step="any" name="returns" placeholder="e.g.: 5" required><br>
+  </div>
+  <div class="form-row">
+    <label for="init">Starting capital:</label>
+    <input type="number" name="init" placeholder="e.g.: 100000" required><br>
+  </div>
+
+    Input the age and extraordinary cash flow (income/expenses) as lists.<br>
     e.g. If you expect a $200,000 expense at age 30 and a $300,000 inflow at age 55:
-    <table style="width: 100%; border: none; border-collapse: collapse;">
+    <table class="special-table" style="width: 50%; margin-left: auto; margin-right: auto; border: none; border-collapse: collapse;">
       <tr>
         <!-- First half (left side) -->
         <td style="width: 50%; padding: 10px; text-align: center;">
             <!-- Content for the left half goes here -->
             <h3>Age</h3>
-            <p>e.g.: 30,55</p>
-            <p><input type="text" name="specialages" placeholder="Age"></p>
+            <p><input type="text" name="specialages" placeholder="e.g.: 30,55"></p>
         </td>
 
         <!-- Second half (right side) -->
         <td style="width: 50%; padding: 10px; text-align: center;">
             <!-- Content for the right half goes here -->
             <h3>Cash flow</h3>
-            <p>e.g.: -200000,300000</p>
-            <p><input type="text" name="specialadds" placeholder="Cash Flow"></p>
+            <p><input type="text" name="specialadds" placeholder="e.g.: -200000,300000"></p>
         </td>
       </tr>
     </table>
