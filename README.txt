@@ -6,7 +6,7 @@ Steps
 3. Host the files on pythonanywhere (https://help.pythonanywhere.com/pages/Flask/)
 3a. Add a new web app
 3b. Select Flask and an appropriate Python version (3+)
-3c. The Flask app is called app.pythonanywhere
+3c. The Flask app is called app.py
 3d. Install dependencies through the Bash console and virtual environment: pip install -r requirements.txt
 3e. Configure WSGI if needed
 3f. Load web app
