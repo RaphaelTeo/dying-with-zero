@@ -51,6 +51,10 @@
     text-align: left;
     flex: 1;              /* label takes left side */
   }
+  .df {
+      display: flex;
+      justify-content: center;
+      }
 
   /* 🔹 MOBILE OPTIMIZATION */
   @media (max-width: 600px) {
@@ -92,6 +96,10 @@
       width: 100% !important;
       padding: 5px 0;
     }
+    .df {
+      display: flex;
+      justify-content: center;
+      }
   }
 </style>
 <body>
@@ -100,27 +108,27 @@
   <form method="POST" action="/">
   <div class="form-row">
     <label for="age">Current age:</label>
-    <input type="number" name="age" placeholder="e.g.: 30" required><br>
+    <input type="number" name="age" placeholder="e.g. 30" required><br>
   </div>
   <div class="form-row">
     <label for="retage">Age to stop working:</label>
-    <input type="number" name="retage" placeholder="e.g.: 50" required><br>
+    <input type="number" name="retage" placeholder="e.g. 50" required><br>
   </div>
   <div class="form-row">
     <label for="income">Annual income:</label>
-    <input type="number" name="income" placeholder="e.g.: 100000" required><br>
+    <input type="number" name="income" placeholder="e.g. 100000" required><br>
   </div>
   <div class="form-row">
     <label for="expenses">Annual expenses:</label>
-    <input type="number" name="expenses" placeholder="e.g.: 48000" required><br>
+    <input type="number" name="expenses" placeholder="e.g. 48000" required><br>
   </div>
   <div class="form-row">
     <label for="returns">Real returns (%):</label>
-    <input type="number" step="any" name="returns" placeholder="e.g.: 5" required><br>
+    <input type="number" step="any" name="returns" placeholder="e.g. 5" required><br>
   </div>
   <div class="form-row">
     <label for="init">Starting capital:</label>
-    <input type="number" name="init" placeholder="e.g.: 100000" required><br>
+    <input type="number" name="init" placeholder="e.g. 100000" required><br>
   </div>
 
     Input the age and extraordinary cash flow (income/expenses) as lists.<br>
@@ -166,7 +174,9 @@
       <img src="data:image/png;base64,{{ image_data }}" alt="Chart of retirement ages" class="center">
       <br><br>
       <div class="tableheader" style="text-align: center;"> {{ tableheader }} </div>
-      {{ table | safe }}
+      <div class="df">
+        {{ table | safe }}
+      </div>
   {% endif %}
   </div>
 </body>
