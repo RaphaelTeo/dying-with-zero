@@ -104,7 +104,7 @@ def index():
             plt.close()
 
             summary = f'DWZ plan with {init}k + income {income}k + expenses {expenses}k at {returns_perc}% return. Extraordinary cashflows (<age>:<cashflow in thousands>): {special_dict}'
-            tableheader = f'Data table for retirement at age {retage} ($ \'000)'
+            tableheader = f'Data table for retirement at age {retage}'
 
         except Exception as e:
             error = f"error: {e}"
